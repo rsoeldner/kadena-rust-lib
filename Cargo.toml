@@ -1,0 +1,50 @@
+[package]
+name = "kadena"
+version = "0.1.0"
+edition = "2021"
+authors = ["Giuseppe Pace <giuseppe@ledgerthings.com>"]
+description = "A comprehensive Rust library for interacting with Pact smart contracts and the Kadena blockchain."
+license = "MIT"
+repository = "https://github.com/ledger-things/kadena-rust-lib"
+documentation = "https://docs.rs/kadena"
+readme = "README.md"
+keywords = ["kadena", "pact", "blockchain", "smart-contracts"]
+categories = ["cryptography", "blockchain"]
+
+[dependencies]
+base64 = "0.22.1"
+blake2 = "0.10.6"
+ed25519-dalek = { version = "2", features = ["rand_core"] }
+env_logger = "0.11.5"
+hex = "0.4.3"
+log = "0.4.22"
+rand = "0.8.5"
+reqwest = { version = "0.12", features = ["json"] }
+serde = { version = "1.0.210", features = ["derive"] }
+serde_json = "1.0.131"
+thiserror = "1.0.64"
+tokio = { version = "1.40.0", features = ["full"] }
+
+[dev-dependencies]
+criterion = { version = "0.4", features = ["html_reports"] }
+wiremock = "0.6.2"
+
+[features]
+default = ["fetch", "pact", "crypto"]
+crypto = []
+pact = ["crypto"]
+fetch = ["pact", "crypto"]
+
+[lib]
+name = "kadena"
+path = "src/lib.rs"
+
+[[bench]]
+name = "crypto_benchmarks"
+harness = false
+path = "benches/crypto_benchmarks.rs"
+
+[[bench]]
+name = "pact_benchmarks"
+harness = false
+path = "benches/pact_benchmarks.rs"
