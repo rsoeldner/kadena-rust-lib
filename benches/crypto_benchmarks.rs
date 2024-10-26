@@ -16,13 +16,13 @@ fn benchmark_keypair_operations(c: &mut Criterion) {
 
     // Benchmark keypair generation
     group.bench_function("generate_keypair", |b| {
-        b.iter(|| PactKeypair::generate());
+        b.iter(|| PactKeypair::generate);
     });
 
     // Benchmark keypair restoration
     let keypair = get_test_keypair();
     group.bench_function("restore_keypair", |b| {
-        b.iter(|| PactKeypair::from_secret_key(&keypair.secret_key()));
+        b.iter(|| PactKeypair::from_secret_key(keypair.secret_key()));
     });
 
     group.finish();
