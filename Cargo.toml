@@ -9,7 +9,7 @@ repository = "https://github.com/ledger-things/kadena-rust-lib"
 documentation = "https://docs.rs/kadena"
 readme = "README.md"
 keywords = ["kadena", "pact", "blockchain", "smart-contracts"]
-categories = ["cryptography", "blockchain"]
+categories = ["cryptography"]
 
 [dependencies]
 base64 = "0.22.1"
