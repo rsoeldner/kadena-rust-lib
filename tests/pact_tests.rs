@@ -81,6 +81,7 @@ mod command_tests {
 
         let cmd = Cmd::prepare_exec(
             &[(&keypair, caps)],
+            Vec::new(),
             Some("test-nonce"),
             &pact_code,
             None,
@@ -148,6 +149,7 @@ mod command_tests {
 
         let cmd1 = Cmd::prepare_exec(
             &[(&keypair, caps.clone())],
+            Vec::new(),
             None,
             "(+ 1 2)",
             None,
@@ -158,6 +160,7 @@ mod command_tests {
 
         let cmd2 = Cmd::prepare_exec(
             &[(&keypair, caps)],
+            Vec::new(),
             None,
             "(+ 1 2)",
             None,
@@ -185,6 +188,7 @@ mod command_tests {
 
         let cmd = Cmd::prepare_exec(
             &[(&keypair1, caps1), (&keypair2, caps2)],
+            Vec::new(),
             Some("test-nonce"),
             "(+ 1 2)",
             None,
@@ -221,6 +225,7 @@ mod command_tests {
 
         let cmd = Cmd::prepare_exec(
             &[(&keypair, caps)],
+            Vec::new(),
             Some("test-nonce"),
             "(+ 1 2)",
             None,
@@ -265,6 +270,7 @@ mod integration_tests {
         // Prepare command
         let cmd = Cmd::prepare_exec(
             &[(&keypair, caps)],
+            Vec::new(),
             Some("test-nonce"),
             &pact_code,
             None,

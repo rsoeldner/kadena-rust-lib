@@ -49,6 +49,7 @@
 //! // Prepare the command
 //! let cmd = Cmd::prepare_exec(
 //!     &[(&keypair, caps)],
+//!     Vec::new(),
 //!     None,
 //!     "(coin.transfer)",
 //!     None,
@@ -119,6 +120,7 @@
 //!
 //! let cmd = Cmd::prepare_exec(
 //!     &[(&keypair, caps)],
+//!     Vec::new(),
 //!     None,
 //!     &pact_code,
 //!     None,

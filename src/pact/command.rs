@@ -37,6 +37,19 @@ impl CommandSigner {
     }
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct CommandVerifier {
+    pub name: String,
+    pub proof: String,
+    pub clist: Vec<Cap>
+}
+
+impl CommandVerifier {
+    pub fn new_verifier(name: &str, proof: &str, caps: Vec<Cap>) -> Self {
+        Self { name: name.to_string(), proof: proof.to_string(), clist: caps }
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 pub struct ExecPayload {
     pub exec: ExecCommand,
@@ -62,6 +75,7 @@ pub struct CommandPayload {
     pub nonce: String,
     pub meta: Meta,
     pub signers: Vec<CommandSigner>,
+    pub verifiers: Vec<CommandVerifier>,
     #[serde(rename = "networkId")]
     pub network_id: Option<String>,
     pub payload: ExecPayload,
@@ -73,6 +87,7 @@ impl CommandPayload {
             nonce: generate_random_nonce(),
             meta,
             signers: Vec::new(),
+            verifiers: Vec::new(),
             network_id: None,
             payload: ExecPayload::default(),
         }
@@ -98,6 +113,11 @@ impl CommandPayload {
         self
     }
 
+    pub fn with_verifiers(mut self, verifiers: Vec<CommandVerifier>) -> Self {
+        self.verifiers = verifiers;
+        self
+    }
+
     pub fn with_env_data(mut self, data: Value) -> Self {
         self.payload.exec.data = data;
         self
@@ -105,6 +125,12 @@ impl CommandPayload {
 
     pub fn add_signer(mut self, signer: CommandSigner) -> Self {
         self.signers.push(signer);
+        self
+    }
+
+
+    pub fn add_verifier(mut self, verifier: CommandVerifier) -> Self {
+        self.verifiers.push(verifier);
         self
     }
 }
@@ -147,6 +173,7 @@ impl Cmd {
     ///
     /// let cmd = Cmd::prepare_exec(
     ///     &[(&keypair, caps)],
+    ///     Vec::new(),
     ///     None,
     ///     "(+ 1 2)",
     ///     None,
@@ -156,6 +183,7 @@ impl Cmd {
     /// ```
     pub fn prepare_exec(
         signers: &[(&PactKeypair, Vec<Cap>)],
+        verifiers: Vec<CommandVerifier>,
         nonce: Option<&str>,
         pact_code: &str,
         env_data: Option<Value>,
@@ -176,7 +204,8 @@ impl Cmd {
                     .unwrap_or_else(generate_random_nonce),
             )
             .with_code(pact_code.to_string())
-            .with_signers(signers_data);
+            .with_signers(signers_data)
+            .with_verifiers(verifiers);
 
         // Add optional fields
         let command_payload = if let Some(network_id) = network_id {

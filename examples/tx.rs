@@ -35,6 +35,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Prepare the execution command using the new method
     let transaction_cmd = Cmd::prepare_exec(
         &[(&keypair, caps)],
+        Vec::new(),
         None, // Let it generate a random nonce
         &pact_code,
         None,

@@ -69,6 +69,7 @@ fn benchmark_cmd_preparation(c: &mut Criterion) {
         b.iter(|| {
             Cmd::prepare_exec(
                 &[(&keypair, vec![Cap::new("coin.GAS")])],
+                Vec::new(),
                 Some("test-nonce"),
                 "(+ 1 2)",
                 None,
@@ -87,6 +88,7 @@ fn benchmark_cmd_preparation(c: &mut Criterion) {
         b.iter(|| {
             Cmd::prepare_exec(
                 &[(&keypair, caps.clone())],
+                Vec::new(),
                 Some("test-nonce"),
                 &pact_code,
                 None,
@@ -106,6 +108,7 @@ fn benchmark_cmd_preparation(c: &mut Criterion) {
         b.iter(|| {
             Cmd::prepare_exec(
                 &[(&keypair, caps1.clone()), (&keypair2, caps2.clone())],
+                Vec::new(),
                 Some("test-nonce"),
                 "(+ 1 2)",
                 None,
@@ -123,6 +126,7 @@ fn benchmark_cmd_preparation(c: &mut Criterion) {
         b.iter(|| {
             Cmd::prepare_exec(
                 &[(&keypair, caps.clone())],
+                Vec::new(),
                 None, // Use random nonce
                 "(+ 1 2)",
                 None,
@@ -156,6 +160,7 @@ fn benchmark_command_with_varying_caps(c: &mut Criterion) {
                 b.iter(|| {
                     Cmd::prepare_exec(
                         &[(&keypair, caps.clone())],
+                        Vec::new(),
                         Some("test-nonce"),
                         "(+ 1 2)",
                         None,
@@ -197,6 +202,7 @@ fn benchmark_complex_json_data(c: &mut Criterion) {
         b.iter(|| {
             Cmd::prepare_exec(
                 &[(&keypair, vec![Cap::new("coin.GAS")])],
+                Vec::new(),
                 Some("test-nonce"),
                 "(+ 1 2)",
                 Some(env_data.clone()),

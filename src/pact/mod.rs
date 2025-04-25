@@ -31,6 +31,7 @@
 //! // Prepare command
 //! let cmd = Cmd::prepare_exec(
 //!     &[(&keypair, caps)],
+//!     Vec::new(),
 //!     None,
 //!     "(+ 1 2)",
 //!     None,
